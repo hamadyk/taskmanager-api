@@ -1,0 +1,28 @@
+[
+  {
+    "ContainingType": "TaskManager.Api.Controllers.TodosController",
+    "Method": "Get",
+    "RelativePath": "api/todos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TaskManager.Api.Controllers.TodosController",
+    "Method": "Create",
+    "RelativePath": "api/todos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "todo",
+        "Type": "TaskManager.Api.Models.TodoItem",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

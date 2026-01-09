@@ -1,0 +1,6 @@
+@TaskManager_HostAddress = http://localhost:5182
+
+GET {{TaskManager_HostAddress}}/TodosController/
+Accept: application/json
+
+###
