@@ -48,3 +48,4 @@ C:\Users\hkonate\source\repos\TaskManager\TaskManager\bin\Release\net8.0\linux-x
 C:\Users\hkonate\source\repos\TaskManager\TaskManager\bin\Release\net8.0\linux-x64\Microsoft.Identity.Client.Extensions.Msal.dll
 C:\Users\hkonate\source\repos\TaskManager\TaskManager\bin\Release\net8.0\linux-x64\Microsoft.IdentityModel.Abstractions.dll
 C:\Users\hkonate\source\repos\TaskManager\TaskManager\bin\Release\net8.0\linux-x64\System.Security.Cryptography.ProtectedData.dll
+C:\Users\hkonate\source\repos\TaskManager\TaskManager\obj\Release\net8.0\linux-x64\TaskManager.sourcelink.json
