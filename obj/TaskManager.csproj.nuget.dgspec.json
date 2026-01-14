@@ -63,6 +63,10 @@
               "target": "Package",
               "version": "[12.26.0, )"
             },
+            "Microsoft.ApplicationInsights.AspNetCore": {
+              "target": "Package",
+              "version": "[2.23.0, )"
+            },
             "Microsoft.OpenApi": {
               "target": "Package",
               "version": "[2.3.0, )"
