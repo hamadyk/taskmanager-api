@@ -1,45 +1,64 @@
-using TaskManager.Api.Services;
+using Azure.Identity;
+using Azure.Storage.Blobs;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// ============================
+// Application Insights
+// ============================
+builder.Services.AddApplicationInsightsTelemetry();
 
+// ============================
+// Azure Key Vault (PRO)
+// ============================
+var keyVaultUrl = builder.Configuration["KeyVault:Url"];
+if (!string.IsNullOrEmpty(keyVaultUrl))
+{
+    builder.Configuration.AddAzureKeyVault(
+        new Uri(keyVaultUrl),
+        new DefaultAzureCredential()
+    );
+}
+
+// ============================
+// Services
+// ============================
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<TodoBlobService>();
-builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["APPINSIGHTS_INSTRUMENTATIONKEY"]);
 
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-//builder.Services.AddOpenApi();
+// Blob client (singleton, cache)
+builder.Services.AddSingleton(sp =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    var conn = config["StorageConnectionString"];
+    var containerName = config["Storage:ContainerName"];
+
+    return new BlobContainerClient(conn, containerName);
+});
 
 var app = builder.Build();
 
-app.MapGet("/", (ILogger<Program> log) =>
+// ============================
+// Middleware
+// ============================
+if (app.Environment.IsDevelopment())
 {
-    log.LogInformation("Hello from /");
-    return "Hello World!";
-});
-
-app.MapGet("/api/todos", (ILogger<Program> log) =>
-{
-    log.LogInformation("GET /api/todos called");
-    return new[] { "Todo1", "Todo2" };
-});
-
-
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-app.UseSwagger();
-app.UseSwaggerUI();
-// app.MapOpenApi();
-//}
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseHttpsRedirection();
-
-//app.UseAuthorization();
-
 app.MapControllers();
+
+// ============================
+// Health check simple
+// ============================
+app.MapGet("/", (ILogger<Program> log) =>
+{
+    log.LogInformation("Health check OK");
+    return Results.Ok("API is running");
+});
 
 app.Run();

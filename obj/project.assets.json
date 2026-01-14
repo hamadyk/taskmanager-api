@@ -20,6 +20,24 @@
           }
         }
       },
+      "Azure.Extensions.AspNetCore.Configuration.Secrets/1.4.0": {
+        "type": "package",
+        "dependencies": {
+          "Azure.Core": "1.44.1",
+          "Azure.Security.KeyVault.Secrets": "4.6.0",
+          "Microsoft.Extensions.Configuration": "2.1.0"
+        },
+        "compile": {
+          "lib/net8.0/Azure.Extensions.AspNetCore.Configuration.Secrets.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Azure.Extensions.AspNetCore.Configuration.Secrets.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Azure.Identity/1.17.1": {
         "type": "package",
         "dependencies": {
@@ -1469,6 +1487,24 @@
         "lib/net8.0/Azure.Core.xml",
         "lib/netstandard2.0/Azure.Core.dll",
         "lib/netstandard2.0/Azure.Core.xml"
+      ]
+    },
+    "Azure.Extensions.AspNetCore.Configuration.Secrets/1.4.0": {
+      "sha512": "cy8kazCYnG/IUHQ9048UUmObgbPsqkQbcdrCAPxl1JA6ylLBV+v+8586bOWpuSF6GZaxpulLGFDBBm3PR5t1gA==",
+      "type": "package",
+      "path": "azure.extensions.aspnetcore.configuration.secrets/1.4.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "CHANGELOG.md",
+        "README.md",
+        "azure.extensions.aspnetcore.configuration.secrets.1.4.0.nupkg.sha512",
+        "azure.extensions.aspnetcore.configuration.secrets.nuspec",
+        "azureicon.png",
+        "lib/net8.0/Azure.Extensions.AspNetCore.Configuration.Secrets.dll",
+        "lib/net8.0/Azure.Extensions.AspNetCore.Configuration.Secrets.xml",
+        "lib/netstandard2.0/Azure.Extensions.AspNetCore.Configuration.Secrets.dll",
+        "lib/netstandard2.0/Azure.Extensions.AspNetCore.Configuration.Secrets.xml"
       ]
     },
     "Azure.Identity/1.17.1": {
@@ -3994,6 +4030,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "Azure.Extensions.AspNetCore.Configuration.Secrets >= 1.4.0",
       "Azure.Identity >= 1.17.1",
       "Azure.Security.KeyVault.Secrets >= 4.8.0",
       "Azure.Storage.Blobs >= 12.26.0",
@@ -4053,6 +4090,10 @@
       "net8.0": {
         "targetAlias": "net8.0",
         "dependencies": {
+          "Azure.Extensions.AspNetCore.Configuration.Secrets": {
+            "target": "Package",
+            "version": "[1.4.0, )"
+          },
           "Azure.Identity": {
             "target": "Package",
             "version": "[1.17.1, )"
