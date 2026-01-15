@@ -13,11 +13,13 @@ public class TodosController : ControllerBase
 
     private readonly ILogger<TodosController> _logger;
     private readonly TodoBlobService _service;
+    private readonly QueueClient _queue;
     public TodosController(
-        ILogger<TodosController> logger, TodoBlobService service)
+        ILogger<TodosController> logger, TodoBlobService service, QueueClient queue)
     {
         _logger = logger;
         _service = service;
+        _queue = queue;
     }
 
     //[HttpGet]
@@ -54,7 +56,7 @@ public class TodosController : ControllerBase
         var item = todo with { Id = Guid.NewGuid() };
         todos.Add(item);
         var message = JsonSerializer.Serialize(todo);
-        await queueClient.SendMessageAsync(message);
+        await _queue.SendMessageAsync(message);
         return Accepted("Todo queued");
     }
 

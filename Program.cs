@@ -1,5 +1,6 @@
 using Azure.Identity;
 using Azure.Storage.Queues;
+using TaskManager.Api.Services;
 using TaskManager.Services;
 
 
@@ -29,7 +30,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddSingleton<TodoBlobService>();
+builder.Services.AddSingleton<TodoBlobService>();
 // Blob client (singleton, cache)
 builder.Services.AddSingleton(sp =>
 {
