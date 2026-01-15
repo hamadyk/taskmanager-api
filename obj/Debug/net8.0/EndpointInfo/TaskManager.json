@@ -5,6 +5,18 @@
     "version": "1.0"
   },
   "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "TaskManager"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/todos": {
       "get": {
         "tags": [
@@ -69,6 +81,9 @@
     }
   },
   "tags": [
+    {
+      "name": "TaskManager"
+    },
     {
       "name": "Todos"
     }

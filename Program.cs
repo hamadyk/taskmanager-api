@@ -1,5 +1,6 @@
 using Azure.Identity;
-using Azure.Storage.Blobs;
+using Azure.Storage.Queues;
+using TaskManager.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,15 +29,28 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//builder.Services.AddSingleton<TodoBlobService>();
 // Blob client (singleton, cache)
 builder.Services.AddSingleton(sp =>
 {
     var config = sp.GetRequiredService<IConfiguration>();
-    var conn = config["StorageConnectionString"];
-    var containerName = config["Storage:ContainerName"];
 
-    return new BlobContainerClient(conn, containerName);
+    var accountName = config["Storage:AccountName"];
+    var queueName = config["Storage:QueueName"];
+
+    var queueUri = new Uri($"https://{accountName}.queue.core.windows.net/{queueName}");
+
+    return new QueueClient(queueUri, new DefaultAzureCredential());
 });
+builder.Services.AddHostedService<TodoWorker>();
+//builder.Services.AddSingleton(sp =>
+//{
+//    var config = sp.GetRequiredService<IConfiguration>();
+//    var conn = config["StorageConnectionString"];
+//    var containerName = config["Storage:ContainerName"];
+
+//    return new BlobContainerClient(conn, containerName);
+//});
 
 var app = builder.Build();
 

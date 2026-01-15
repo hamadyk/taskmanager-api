@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure.Storage.Queues;
+using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using TaskManager.Api.Models;
 using TaskManager.Api.Services;
 
@@ -33,14 +35,27 @@ public class TodosController : ControllerBase
         return Ok(todos);
     }
 
+    //[HttpPost]
+    //public async Task<IActionResult> Create(TodoItem todo)
+    //{
+    //    _logger.LogInformation("GET /api/todos set");
+
+    //    var todos = await _service.GetTodosAsync();
+    //    var item = todo with { Id = Guid.NewGuid() };
+    //    todos.Add(item);
+    //    await _service.SaveTodosAsync(todos);
+    //    return Ok(item);
+    //}
+
     [HttpPost]
-    public async Task<IActionResult> Create(TodoItem todo)
+    public async Task<IActionResult> Create([FromBody] TodoItem todo, QueueClient queueClient)
     {
-        _logger.LogInformation("GET /api/todos set");
-        var todos = await _service.GetTodosAsync();
+        var todos = new List<TodoItem>();
         var item = todo with { Id = Guid.NewGuid() };
         todos.Add(item);
-        await _service.SaveTodosAsync(todos);
-        return Ok(item);
+        var message = JsonSerializer.Serialize(todo);
+        await queueClient.SendMessageAsync(message);
+        return Accepted("Todo queued");
     }
+
 }

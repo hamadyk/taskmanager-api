@@ -67,6 +67,10 @@
               "target": "Package",
               "version": "[12.26.0, )"
             },
+            "Azure.Storage.Queues": {
+              "target": "Package",
+              "version": "[12.25.0, )"
+            },
             "Microsoft.ApplicationInsights.AspNetCore": {
               "target": "Package",
               "version": "[2.23.0, )"

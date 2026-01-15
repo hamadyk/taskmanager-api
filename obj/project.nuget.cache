@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "aO4O5INQaYE=",
+  "dgSpecHash": "P4RrDBRWYmM=",
   "success": true,
   "projectFilePath": "C:\\Users\\hkonate\\source\\repos\\TaskManager\\TaskManager\\TaskManager.csproj",
   "expectedPackageFiles": [
@@ -9,7 +9,8 @@
     "C:\\Users\\hkonate\\.nuget\\packages\\azure.identity\\1.17.1\\azure.identity.1.17.1.nupkg.sha512",
     "C:\\Users\\hkonate\\.nuget\\packages\\azure.security.keyvault.secrets\\4.8.0\\azure.security.keyvault.secrets.4.8.0.nupkg.sha512",
     "C:\\Users\\hkonate\\.nuget\\packages\\azure.storage.blobs\\12.26.0\\azure.storage.blobs.12.26.0.nupkg.sha512",
-    "C:\\Users\\hkonate\\.nuget\\packages\\azure.storage.common\\12.25.0\\azure.storage.common.12.25.0.nupkg.sha512",
+    "C:\\Users\\hkonate\\.nuget\\packages\\azure.storage.common\\12.26.0\\azure.storage.common.12.26.0.nupkg.sha512",
+    "C:\\Users\\hkonate\\.nuget\\packages\\azure.storage.queues\\12.25.0\\azure.storage.queues.12.25.0.nupkg.sha512",
     "C:\\Users\\hkonate\\.nuget\\packages\\microsoft.applicationinsights\\2.23.0\\microsoft.applicationinsights.2.23.0.nupkg.sha512",
     "C:\\Users\\hkonate\\.nuget\\packages\\microsoft.applicationinsights.aspnetcore\\2.23.0\\microsoft.applicationinsights.aspnetcore.2.23.0.nupkg.sha512",
     "C:\\Users\\hkonate\\.nuget\\packages\\microsoft.applicationinsights.dependencycollector\\2.23.0\\microsoft.applicationinsights.dependencycollector.2.23.0.nupkg.sha512",
@@ -70,7 +71,7 @@
     "C:\\Users\\hkonate\\.nuget\\packages\\system.globalization\\4.0.11\\system.globalization.4.0.11.nupkg.sha512",
     "C:\\Users\\hkonate\\.nuget\\packages\\system.io\\4.1.0\\system.io.4.1.0.nupkg.sha512",
     "C:\\Users\\hkonate\\.nuget\\packages\\system.io.filesystem.accesscontrol\\4.7.0\\system.io.filesystem.accesscontrol.4.7.0.nupkg.sha512",
-    "C:\\Users\\hkonate\\.nuget\\packages\\system.io.hashing\\8.0.0\\system.io.hashing.8.0.0.nupkg.sha512",
+    "C:\\Users\\hkonate\\.nuget\\packages\\system.io.hashing\\10.0.1\\system.io.hashing.10.0.1.nupkg.sha512",
     "C:\\Users\\hkonate\\.nuget\\packages\\system.linq\\4.1.0\\system.linq.4.1.0.nupkg.sha512",
     "C:\\Users\\hkonate\\.nuget\\packages\\system.memory.data\\8.0.1\\system.memory.data.8.0.1.nupkg.sha512",
     "C:\\Users\\hkonate\\.nuget\\packages\\system.reflection\\4.1.0\\system.reflection.4.1.0.nupkg.sha512",
