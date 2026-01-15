@@ -1,6 +1,6 @@
-﻿
-using Azure.Storage.Blobs;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using TaskManager.Api.Models;
+using TaskManager.Api.Services;
 
 namespace TaskManager.Api.Controllers;
 
@@ -8,38 +8,39 @@ namespace TaskManager.Api.Controllers;
 [Route("api/todos")]
 public class TodosController : ControllerBase
 {
-    private readonly BlobContainerClient _container;
+
     private readonly ILogger<TodosController> _logger;
-
+    private readonly TodoBlobService _service;
     public TodosController(
-        BlobContainerClient container,
-        ILogger<TodosController> logger)
+        ILogger<TodosController> logger, TodoBlobService service)
     {
-        _container = container;
         _logger = logger;
-    }
-
-    [HttpGet]
-    public IActionResult Get()
-    {
-        _logger.LogInformation("GET /api/todos called");
-        return Ok(new[] { "Todo 1", "Todo 2" });
+        _service = service;
     }
 
     //[HttpGet]
-    //public async Task<IActionResult> Get()
+    //public IActionResult Get()
     //{
-    //    var todos = await _service.GetTodosAsync();
-    //    return Ok(todos);
+    //    _logger.LogInformation("GET /api/todos called");
+    //    return Ok(new[] { "Todo 1", "Todo 2" });
     //}
 
-    //[HttpPost]
-    //public async Task<IActionResult> Create(TodoItem todo)
-    //{
-    //    var todos = await _service.GetTodosAsync();
-    //    var item = todo with { Id = Guid.NewGuid() };
-    //    todos.Add(item);
-    //    await _service.SaveTodosAsync(todos);
-    //    return Ok(item);
-    //}
+    [HttpGet]
+    public async Task<IActionResult> Get()
+    {
+        _logger.LogInformation("GET /api/todos called");
+        var todos = await _service.GetTodosAsync();
+        return Ok(todos);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create(TodoItem todo)
+    {
+        _logger.LogInformation("GET /api/todos set");
+        var todos = await _service.GetTodosAsync();
+        var item = todo with { Id = Guid.NewGuid() };
+        todos.Add(item);
+        await _service.SaveTodosAsync(todos);
+        return Ok(item);
+    }
 }
