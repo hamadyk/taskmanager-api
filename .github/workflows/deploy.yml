@@ -1,16 +1,21 @@
-name: Build and Deploy .NET API to Azure App Service
+name: Build and Deploy with OIDC (.NET 8)
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout
       uses: actions/checkout@v4
 
     - name: Setup .NET
@@ -18,22 +23,21 @@ jobs:
       with:
         dotnet-version: '8.0.x'
 
-    - name: Restore dependencies
-      run: dotnet restore
-
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: |
+        dotnet restore
+        dotnet publish -c Release -o ./publish
 
-    - name: Publish
-      run: dotnet publish -c Release -o publish
+    - name: Azure Login (OIDC)
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Deploy to Azure Web App (staging)
       uses: azure/webapps-deploy@v2
       with:
         app-name: taskmanager-api-hamady
         slot-name: staging
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: ./publish
-
-     
-
