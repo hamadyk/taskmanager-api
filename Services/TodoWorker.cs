@@ -1,5 +1,4 @@
-﻿
-using Azure.Storage.Queues;
+﻿using Azure.Storage.Queues;
 using System.Text.Json;
 using TaskManager.Api.Models;
 using TaskManager.Api.Services;
@@ -24,18 +23,33 @@ namespace TaskManager.Services
             while (!stoppingToken.IsCancellationRequested)
             {
 
-                var messages = await _queue.ReceiveMessagesAsync(1, TimeSpan.FromSeconds(30));
-
-                foreach (var msg in messages.Value)
+                try
                 {
-                    _logger.LogInformation("Processing todo: {Todo}", msg.MessageText);
-                    var todo = JsonSerializer.Deserialize<List<TodoItem>>(msg.MessageText);
+                    var messages = await _queue.ReceiveMessagesAsync(maxMessages: 1, visibilityTimeout: TimeSpan.FromSeconds(30));
 
-                    await _blob.SaveTodosAsync(todo);
-                    // simulate work
-                    await Task.Delay(2000, stoppingToken);
 
-                    await _queue.DeleteMessageAsync(msg.MessageId, msg.PopReceipt);
+                    if (messages.Value.Length == 0)
+                    {
+                        // Queue vide → on attend avant de re-tester
+                        await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
+                        continue;
+                    }
+                    foreach (var msg in messages.Value)
+                    {
+                        _logger.LogInformation("Processing todo: {Todo}", msg.MessageText);
+                        var todo = JsonSerializer.Deserialize<List<TodoItem>>(msg.MessageText);
+
+                        await _blob.SaveTodosAsync(todo);
+                        // simulate work
+                        await Task.Delay(2000, stoppingToken);
+
+                        await _queue.DeleteMessageAsync(msg.MessageId, msg.PopReceipt);
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.Message.ToString()); ;
                 }
             }
         }
