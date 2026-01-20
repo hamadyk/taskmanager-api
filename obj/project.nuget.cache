@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "P4RrDBRWYmM=",
+  "dgSpecHash": "VJzj/BcIQM4=",
   "success": true,
   "projectFilePath": "C:\\Users\\hkonate\\source\\repos\\TaskManager\\TaskManager\\TaskManager.csproj",
   "expectedPackageFiles": [
@@ -11,6 +11,7 @@
     "C:\\Users\\hkonate\\.nuget\\packages\\azure.storage.blobs\\12.26.0\\azure.storage.blobs.12.26.0.nupkg.sha512",
     "C:\\Users\\hkonate\\.nuget\\packages\\azure.storage.common\\12.26.0\\azure.storage.common.12.26.0.nupkg.sha512",
     "C:\\Users\\hkonate\\.nuget\\packages\\azure.storage.queues\\12.25.0\\azure.storage.queues.12.25.0.nupkg.sha512",
+    "C:\\Users\\hkonate\\.nuget\\packages\\azurite\\2.6.5\\azurite.2.6.5.nupkg.sha512",
     "C:\\Users\\hkonate\\.nuget\\packages\\microsoft.applicationinsights\\2.23.0\\microsoft.applicationinsights.2.23.0.nupkg.sha512",
     "C:\\Users\\hkonate\\.nuget\\packages\\microsoft.applicationinsights.aspnetcore\\2.23.0\\microsoft.applicationinsights.aspnetcore.2.23.0.nupkg.sha512",
     "C:\\Users\\hkonate\\.nuget\\packages\\microsoft.applicationinsights.dependencycollector\\2.23.0\\microsoft.applicationinsights.dependencycollector.2.23.0.nupkg.sha512",

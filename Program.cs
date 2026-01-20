@@ -1,6 +1,4 @@
-﻿using Azure.Core;
-using Azure.Identity;
-using Azure.Storage.Queues;
+﻿using Azure.Identity;
 using TaskManager.Api.Services;
 using TaskManager.Services;
 
@@ -24,6 +22,7 @@ if (!string.IsNullOrEmpty(keyVaultUrl))
     );
 }
 
+
 // ============================
 // Services
 // ============================
@@ -32,86 +31,76 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<TodoBlobService>();
-// Blob client (singleton, cach
 
-//builder.Services.AddSingleton(sp =>
+
+builder.Services.AddSingleton(sp =>
+{
+    var queueName = builder.Configuration["Storage:QueueName"];
+    var connectionString = builder.Configuration["AzureWebJobsStorage"];
+    //TokenCredential credential;
+    //var env = sp.GetRequiredService<IHostEnvironment>();
+    //if (env.IsDevelopment())
+    //{
+    //    // ✅ LOCAL : Azure CLI ou Visual Studio
+    //    credential = new DefaultAzureCredential();
+    //}
+    //else
+    //{
+    //    // 🔒 AZURE : Managed Identity UNIQUEMENT
+    //    credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions
+    //    {
+    //        ExcludeEnvironmentCredential = true,
+    //        ExcludeSharedTokenCacheCredential = true,
+    //        ExcludeVisualStudioCredential = true,
+    //        ExcludeVisualStudioCodeCredential = true,
+    //        ExcludeAzureCliCredential = true,
+    //        ExcludeAzurePowerShellCredential = true,
+    //        ExcludeInteractiveBrowserCredential = true
+    //    });
+    //}
+    var queueClient = new Azure.Storage.Queues.QueueClient(connectionString, queueName);
+    queueClient.CreateIfNotExists(); // 🔥 OBLIGATOIRE
+
+    return queueClient;
+});
+
+//builder.Services.AddSingleton<QueueClient>(sp =>
 //{
 //    var config = sp.GetRequiredService<IConfiguration>();
+//    var env = sp.GetRequiredService<IHostEnvironment>();
 
 //    var accountName = config["Storage:AccountName"];
 //    var queueName = config["Storage:QueueName"];
 
-//    if (string.IsNullOrEmpty(accountName))
-//        throw new InvalidOperationException("Storage:AccountName manquant");
-
-//    if (string.IsNullOrEmpty(queueName))
-//        throw new InvalidOperationException("Storage:QueueName manquant");
-
 //    var queueUri = new Uri($"https://{accountName}.queue.core.windows.net/{queueName}");
 
-//    var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions
+//    TokenCredential credential;
+
+//    if (env.IsDevelopment())
 //    {
-//        // 🔒 On force Managed Identity uniquement
-//        ExcludeEnvironmentCredential = true,
-//        //ExcludeSharedTokenCacheCredential = true,
-//        ExcludeVisualStudioCredential = true,
-//        ExcludeVisualStudioCodeCredential = true,
-//        ExcludeAzureCliCredential = true,
-//        ExcludeAzurePowerShellCredential = true,
-//        ExcludeInteractiveBrowserCredential = true
-//    });
+//        // ✅ LOCAL : Azure CLI ou Visual Studio
+//        credential = new DefaultAzureCredential();
+//    }
+//    else
+//    {
+//        // 🔒 AZURE : Managed Identity UNIQUEMENT
+//        credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions
+//        {
+//            ExcludeEnvironmentCredential = true,
+//            ExcludeSharedTokenCacheCredential = true,
+//            ExcludeVisualStudioCredential = true,
+//            ExcludeVisualStudioCodeCredential = true,
+//            ExcludeAzureCliCredential = true,
+//            ExcludeAzurePowerShellCredential = true,
+//            ExcludeInteractiveBrowserCredential = true
+//        });
+//    }
 
-//    return new QueueClient(queueUri);
+//    return new QueueClient(queueUri, credential);
 //});
-
-
-builder.Services.AddSingleton<QueueClient>(sp =>
-{
-    var config = sp.GetRequiredService<IConfiguration>();
-    var env = sp.GetRequiredService<IHostEnvironment>();
-
-    var accountName = config["Storage:AccountName"];
-    var queueName = config["Storage:QueueName"];
-
-    var queueUri = new Uri($"https://{accountName}.queue.core.windows.net/{queueName}");
-
-    TokenCredential credential;
-
-    if (env.IsDevelopment())
-    {
-        // ✅ LOCAL : Azure CLI ou Visual Studio
-        credential = new DefaultAzureCredential();
-    }
-    else
-    {
-        // 🔒 AZURE : Managed Identity UNIQUEMENT
-        credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions
-        {
-            ExcludeEnvironmentCredential = true,
-            ExcludeSharedTokenCacheCredential = true,
-            ExcludeVisualStudioCredential = true,
-            ExcludeVisualStudioCodeCredential = true,
-            ExcludeAzureCliCredential = true,
-            ExcludeAzurePowerShellCredential = true,
-            ExcludeInteractiveBrowserCredential = true
-        });
-    }
-
-    return new QueueClient(queueUri, credential);
-});
-
-
 
 
 builder.Services.AddHostedService<TodoWorker>();
-//builder.Services.AddSingleton(sp =>
-//{
-//    var config = sp.GetRequiredService<IConfiguration>();
-//    var conn = config["StorageConnectionString"];
-//    var containerName = config["Storage:ContainerName"];
-
-//    return new BlobContainerClient(conn, containerName);
-//});
 
 var app = builder.Build();
 

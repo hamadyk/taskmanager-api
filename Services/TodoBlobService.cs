@@ -41,14 +41,11 @@ public class TodoBlobService
         return JsonSerializer.Deserialize<List<TodoItem>>(content.Value.Content.ToString())
                ?? [];
     }
-
     public async Task SaveTodosAsync(List<TodoItem> todos)
     {
         var blob = _container.GetBlobClient("todos.json");
-
         var json = JsonSerializer.Serialize(todos);
         using var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(json));
-
         await blob.UploadAsync(stream, overwrite: true);
     }
 }

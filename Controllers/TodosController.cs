@@ -1,5 +1,6 @@
 ﻿using Azure.Storage.Queues;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 using System.Text.Json;
 using TaskManager.Api.Models;
 using TaskManager.Api.Services;
@@ -52,11 +53,17 @@ public class TodosController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] TodoItem todo, QueueClient queueClient)
     {
-        var todos = new List<TodoItem>();
+        var todos = await _service.GetTodosAsync(); ;
         var item = todo with { Id = Guid.NewGuid() };
         todos.Add(item);
-        var message = JsonSerializer.Serialize(todo);
-        await _queue.SendMessageAsync(message);
+        var message = JsonSerializer.Serialize(todos);
+        _logger.LogInformation(
+    "SEND → Account: {Account}, Queue: {Queue}",
+    _queue.AccountName,
+    _queue.Name);
+        var messages = Convert.ToBase64String(
+             Encoding.UTF8.GetBytes(message));
+        await _queue.SendMessageAsync(messages);
         return Accepted("Todo queued");
     }
 

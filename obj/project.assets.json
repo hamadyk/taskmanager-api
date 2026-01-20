@@ -123,6 +123,9 @@
           }
         }
       },
+      "Azurite/2.6.5": {
+        "type": "package"
+      },
       "Microsoft.ApplicationInsights/2.23.0": {
         "type": "package",
         "dependencies": {
@@ -1620,6 +1623,22 @@
         "lib/netstandard2.0/Azure.Storage.Queues.xml",
         "lib/netstandard2.1/Azure.Storage.Queues.dll",
         "lib/netstandard2.1/Azure.Storage.Queues.xml"
+      ]
+    },
+    "Azurite/2.6.5": {
+      "sha512": "uxaL8MDK4RN5uTVDdvar/xiU9WVX9e0IXiHMRiL0qLAXub0Fr5C34OIBH+pQ1FZh7W9zfNP09yEuqKLHYHHwKw==",
+      "type": "package",
+      "path": "azurite/2.6.5",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "azurite.2.6.5.nupkg.sha512",
+        "azurite.nuspec",
+        "tools/blob.exe",
+        "tools/init.ps1",
+        "tools/queue.exe",
+        "tools/table.exe"
       ]
     },
     "Microsoft.ApplicationInsights/2.23.0": {
@@ -4075,6 +4094,7 @@
       "Azure.Security.KeyVault.Secrets >= 4.8.0",
       "Azure.Storage.Blobs >= 12.26.0",
       "Azure.Storage.Queues >= 12.25.0",
+      "Azurite >= 2.6.5",
       "Microsoft.ApplicationInsights.AspNetCore >= 2.23.0",
       "Microsoft.OpenApi >= 2.3.0",
       "Swashbuckle.AspNetCore >= 10.1.0"
@@ -4151,6 +4171,10 @@
             "target": "Package",
             "version": "[12.25.0, )"
           },
+          "Azurite": {
+            "target": "Package",
+            "version": "[2.6.5, )"
+          },
           "Microsoft.ApplicationInsights.AspNetCore": {
             "target": "Package",
             "version": "[2.23.0, )"
@@ -4183,7 +4207,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.309/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
